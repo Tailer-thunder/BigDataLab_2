@@ -30,11 +30,26 @@ docker exec -it bigdata-clickhouse clickhouse-client
 ## 5. Проверить витрины
 ```sql
 SHOW TABLES FROM reports;
-SELECT * FROM reports.report_product_sales LIMIT 10;
-SELECT * FROM reports.report_customer_sales LIMIT 10;
-SELECT * FROM reports.report_time_sales LIMIT 10;
-SELECT * FROM reports.report_store_sales LIMIT 5;
-SELECT * FROM reports.report_supplier_sales LIMIT 5;
-SELECT * FROM reports.report_product_quality LIMIT 10;
+SELECT * FROM reports.report_product_sales
+ORDER BY sales_rank
+LIMIT 10;
+
+SELECT * FROM reports.report_customer_sales
+ORDER BY spending_rank
+LIMIT 10;
+
+SELECT * FROM reports.report_time_sales
+LIMIT 10;
+
+SELECT * FROM reports.report_store_sales
+ORDER BY revenue_rank
+LIMIT 5;
+
+SELECT * FROM reports.report_supplier_sales
+ORDER BY revenue_rank
+LIMIT 5;
+
+SELECT * FROM reports.report_product_quality
+LIMIT 10;
 ```
 Показывает список таблиц и содержимое 6 необходимых витрин.
