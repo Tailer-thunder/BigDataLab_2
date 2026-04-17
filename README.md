@@ -7,13 +7,13 @@ docker compose up -d
 ```
 Запускает PostgreSQL, ClickHouse и Spark в Docker.
 
-## 3. Построить звезду в PostgreSQL
+## 2. Построить звезду в PostgreSQL
 ```powershell
 docker compose exec spark /bin/bash -lc "mkdir -p /tmp/.ivy2 && /opt/spark/bin/spark-submit --master local[*] --conf spark.jars.ivy=/tmp/.ivy2 --packages org.postgresql:postgresql:42.7.4 /opt/project/spark_jobs/etl_to_postgres_star.py"
 ```
 Spark читает исходные CSV, загружает сырые данные и строит схему «звезда» в PostgreSQL.
 
-## 4. Построить 6 витрин в ClickHouse
+## 3. Построить 6 витрин в ClickHouse
 ```powershell
 docker compose exec spark /bin/bash -lc "mkdir -p /tmp/.ivy2 && /opt/spark/bin/spark-submit --master local[*] --conf spark.jars.ivy=/tmp/.ivy2 --packages org.postgresql:postgresql:42.7.4,com.clickhouse:clickhouse-jdbc:0.6.3 /opt/project/spark_jobs/clickhouse_reports.py"
 ```
@@ -21,13 +21,13 @@ Spark читает данные из PostgreSQL и создаёт 6 итогов
 
 # Проверка результата
 
-## 5. Открыть ClickHouse
+## 4. Открыть ClickHouse
 ```powershell
 docker exec -it bigdata-clickhouse clickhouse-client
 ```
 открывает консоль ClickHouse для проверки созданных витрин.
 
-## 6. Проверить витрины
+## 5. Проверить витрины
 ```sql
 SHOW TABLES FROM reports;
 SELECT * FROM reports.report_product_sales LIMIT 10;
